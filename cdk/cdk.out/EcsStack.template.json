@@ -1,0 +1,535 @@
+{
+ "Resources": {
+  "ClusterEB0386A7": {
+   "Type": "AWS::ECS::Cluster",
+   "Properties": {
+    "ClusterSettings": [
+     {
+      "Name": "containerInsights",
+      "Value": "enabled"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "EcsStack/Cluster/Resource"
+   }
+  },
+  "TaskExecutionRole250D2532": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "EcsStack/TaskExecutionRole/Resource"
+   }
+  },
+  "TaskExecutionRoleDefaultPolicyA84DD1B0": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "LogGroupF5B46931",
+         "Arn"
+        ]
+       }
+      },
+      {
+       "Action": [
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:GetSecretValue"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::ImportValue": "RdsStack:ExportsOutputRefAiStarterKitDbSecretAttachment4142D0EACBA3F24B"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "TaskExecutionRoleDefaultPolicyA84DD1B0",
+    "Roles": [
+     {
+      "Ref": "TaskExecutionRole250D2532"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "EcsStack/TaskExecutionRole/DefaultPolicy/Resource"
+   }
+  },
+  "TaskRole30FC0FBB": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/AmazonS3ReadOnlyAccess"
+       ]
+      ]
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/CloudWatchLogsFullAccess"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "EcsStack/TaskRole/Resource"
+   }
+  },
+  "LogGroupF5B46931": {
+   "Type": "AWS::Logs::LogGroup",
+   "Properties": {
+    "LogGroupName": "/ecs/ai-starter-kit",
+    "RetentionInDays": 30
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "EcsStack/LogGroup/Resource"
+   }
+  },
+  "TaskDefinitionB36D86D9": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Environment": [
+       {
+        "Name": "DB_TYPE",
+        "Value": "postgresdb"
+       },
+       {
+        "Name": "DB_POSTGRESDB_HOST",
+        "Value": {
+         "Fn::ImportValue": "RdsStack:ExportsOutputFnGetAttAiStarterKitDb9C7B26C3EndpointAddressF91F6D63"
+        }
+       },
+       {
+        "Name": "DB_POSTGRESDB_USER",
+        "Value": "dbadmin"
+       },
+       {
+        "Name": "N8N_DIAGNOSTICS_ENABLED",
+        "Value": "false"
+       },
+       {
+        "Name": "N8N_PERSONALIZATION_ENABLED",
+        "Value": "false"
+       },
+       {
+        "Name": "OLLAMA_HOST",
+        "Value": "localhost:11434"
+       },
+       {
+        "Name": "N8N_SECURE_COOKIE",
+        "Value": "false"
+       }
+      ],
+      "Essential": true,
+      "Image": "n8nio/n8n:latest",
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "LogGroupF5B46931"
+        },
+        "awslogs-stream-prefix": "n8n",
+        "awslogs-region": "us-west-2"
+       }
+      },
+      "Name": "n8n",
+      "PortMappings": [
+       {
+        "ContainerPort": 5678,
+        "HostPort": 5678,
+        "Protocol": "tcp"
+       }
+      ],
+      "Secrets": [
+       {
+        "Name": "DB_POSTGRESDB_PASSWORD",
+        "ValueFrom": {
+         "Fn::Join": [
+          "",
+          [
+           {
+            "Fn::ImportValue": "RdsStack:ExportsOutputRefAiStarterKitDbSecretAttachment4142D0EACBA3F24B"
+           },
+           ":password::"
+          ]
+         ]
+        }
+       }
+      ]
+     },
+     {
+      "Essential": true,
+      "Image": "ollama/ollama:latest",
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "LogGroupF5B46931"
+        },
+        "awslogs-stream-prefix": "ollama",
+        "awslogs-region": "us-west-2"
+       }
+      },
+      "Name": "ollama",
+      "PortMappings": [
+       {
+        "ContainerPort": 11434,
+        "HostPort": 11434,
+        "Protocol": "tcp"
+       }
+      ]
+     },
+     {
+      "Essential": true,
+      "Image": "qdrant/qdrant",
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "LogGroupF5B46931"
+        },
+        "awslogs-stream-prefix": "qdrant",
+        "awslogs-region": "us-west-2"
+       }
+      },
+      "Name": "qdrant",
+      "PortMappings": [
+       {
+        "ContainerPort": 6333,
+        "HostPort": 6333,
+        "Protocol": "tcp"
+       }
+      ]
+     }
+    ],
+    "Cpu": "2048",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "TaskExecutionRole250D2532",
+      "Arn"
+     ]
+    },
+    "Family": "EcsStackTaskDefinition458D056A",
+    "Memory": "4096",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "TaskRole30FC0FBB",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EcsStack/TaskDefinition/Resource"
+   }
+  },
+  "ALBAEE750D2": {
+   "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+   "Properties": {
+    "LoadBalancerAttributes": [
+     {
+      "Key": "deletion_protection.enabled",
+      "Value": "false"
+     }
+    ],
+    "Scheme": "internet-facing",
+    "SecurityGroups": [
+     {
+      "Fn::ImportValue": "VpcStack:ExportsOutputFnGetAttAiStarterKitAlbSgFB957871GroupId6FDD03F9"
+     }
+    ],
+    "Subnets": [
+     {
+      "Fn::ImportValue": "VpcStack:ExportsOutputRefAiStarterKitVPCPublicSubnet1Subnet8223C1CA8B1BA21A"
+     },
+     {
+      "Fn::ImportValue": "VpcStack:ExportsOutputRefAiStarterKitVPCPublicSubnet2SubnetB46BCE3A6C21AFA4"
+     }
+    ],
+    "Type": "application"
+   },
+   "Metadata": {
+    "aws:cdk:path": "EcsStack/ALB/Resource"
+   }
+  },
+  "ALBListener3B99FF85": {
+   "Type": "AWS::ElasticLoadBalancingV2::Listener",
+   "Properties": {
+    "DefaultActions": [
+     {
+      "TargetGroupArn": {
+       "Ref": "TargetGroup3D7CD9B8"
+      },
+      "Type": "forward"
+     }
+    ],
+    "LoadBalancerArn": {
+     "Ref": "ALBAEE750D2"
+    },
+    "Port": 80,
+    "Protocol": "HTTP"
+   },
+   "Metadata": {
+    "aws:cdk:path": "EcsStack/ALB/Listener/Resource"
+   }
+  },
+  "TargetGroup3D7CD9B8": {
+   "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+   "Properties": {
+    "HealthCheckIntervalSeconds": 30,
+    "HealthCheckPath": "/",
+    "HealthCheckTimeoutSeconds": 5,
+    "HealthyThresholdCount": 2,
+    "Port": 5678,
+    "Protocol": "HTTP",
+    "TargetGroupAttributes": [
+     {
+      "Key": "stickiness.enabled",
+      "Value": "false"
+     }
+    ],
+    "TargetType": "ip",
+    "UnhealthyThresholdCount": 2,
+    "VpcId": {
+     "Fn::ImportValue": "VpcStack:ExportsOutputRefAiStarterKitVPC247379A5C85F265D"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "EcsStack/TargetGroup/Resource"
+   }
+  },
+  "ServiceD69D759B": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Ref": "ClusterEB0386A7"
+    },
+    "DeploymentConfiguration": {
+     "Alarms": {
+      "AlarmNames": [],
+      "Enable": false,
+      "Rollback": false
+     },
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "DesiredCount": 1,
+    "EnableECSManagedTags": false,
+    "HealthCheckGracePeriodSeconds": 60,
+    "LaunchType": "FARGATE",
+    "LoadBalancers": [
+     {
+      "ContainerName": "n8n",
+      "ContainerPort": 5678,
+      "TargetGroupArn": {
+       "Ref": "TargetGroup3D7CD9B8"
+      }
+     }
+    ],
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "ENABLED",
+      "SecurityGroups": [
+       {
+        "Fn::ImportValue": "VpcStack:ExportsOutputFnGetAttAiStarterKitEcsSg3258806DGroupId577E92C3"
+       }
+      ],
+      "Subnets": [
+       {
+        "Fn::ImportValue": "VpcStack:ExportsOutputRefAiStarterKitVPCPublicSubnet1Subnet8223C1CA8B1BA21A"
+       },
+       {
+        "Fn::ImportValue": "VpcStack:ExportsOutputRefAiStarterKitVPCPublicSubnet2SubnetB46BCE3A6C21AFA4"
+       }
+      ]
+     }
+    },
+    "TaskDefinition": {
+     "Ref": "TaskDefinitionB36D86D9"
+    }
+   },
+   "DependsOn": [
+    "ALBListener3B99FF85",
+    "TaskRole30FC0FBB"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "EcsStack/Service/Service"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/11PTW/CMAz9LdzTTGXSJI4b03ZBGirckQmmMw1JlTggFOW/L/2aup38/D5kv6UsVy+yXMDdF+rUFJqOMu4YVCMydYiovIxrHTyjE+uzmeAHuBoY9+CbdzyTISZrOsN/xhoGMuhm3JjdobuRwi40wiQIrjJWVvdsP7dWk3p064CS0LbOP21s/elsaDtlwkmgBs+ktIXTETQYRaa+LWV8bdschu78JmtvvTY0+rPPfZSLmtEz4Zm+zy2Qf3+YrSmJCr0Nbij3FbgNnMT2wd/WPD3LspSrxcUTFS4YpivKapg/VvtbX40BAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "EcsStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "LoadBalancerDNS": {
+   "Description": "DNS name of the load balancer for n8n access",
+   "Value": {
+    "Fn::GetAtt": [
+     "ALBAEE750D2",
+     "DNSName"
+    ]
+   }
+  },
+  "N8nUrl": {
+   "Description": "URL to access the n8n interface",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "http://",
+      {
+       "Fn::GetAtt": [
+        "ALBAEE750D2",
+        "DNSName"
+       ]
+      }
+     ]
+    ]
+   }
+  },
+  "OllamaEndpoint": {
+   "Description": "Endpoint for Ollama API (accessible from n8n only)",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "http://",
+      {
+       "Fn::GetAtt": [
+        "ALBAEE750D2",
+        "DNSName"
+       ]
+      },
+      ":11434"
+     ]
+    ]
+   }
+  },
+  "QdrantEndpoint": {
+   "Description": "Endpoint for Qdrant API (accessible from n8n only)",
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "http://",
+      {
+       "Fn::GetAtt": [
+        "ALBAEE750D2",
+        "DNSName"
+       ]
+      },
+      ":6333"
+     ]
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,598 @@
+{
+  "version": "41.0.0",
+  "artifacts": {
+    "VpcStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "VpcStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "VpcStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://539247467350/us-west-2",
+      "properties": {
+        "templateFile": "VpcStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::539247467350:role/cdk-hnb659fds-deploy-role-539247467350-us-west-2",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::539247467350:role/cdk-hnb659fds-cfn-exec-role-539247467350-us-west-2",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-539247467350-us-west-2/60064397e6a829b467a70db6173827bcf2f87fd78a39528d2580f9c79fd33520.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "VpcStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::539247467350:role/cdk-hnb659fds-lookup-role-539247467350-us-west-2",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "VpcStack.assets"
+      ],
+      "metadata": {
+        "/VpcStack/AiStarterKitVPC/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPC247379A5"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PublicSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPublicSubnet1Subnet8223C1CA"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PublicSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPublicSubnet1RouteTable6FE7DBF2"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PublicSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPublicSubnet1RouteTableAssociation6B17BD84"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PublicSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPublicSubnet1DefaultRouteE2417A19"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PublicSubnet1/EIP": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPublicSubnet1EIP4CE6DC3C"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PublicSubnet1/NATGateway": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPublicSubnet1NATGateway8C5615BF"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PublicSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPublicSubnet2SubnetB46BCE3A"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PublicSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPublicSubnet2RouteTableBDB11FA1"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PublicSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPublicSubnet2RouteTableAssociation9EF99589"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PublicSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPublicSubnet2DefaultRoute7402E2FB"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PublicSubnet2/EIP": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPublicSubnet2EIPDDE12D79"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PublicSubnet2/NATGateway": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPublicSubnet2NATGateway661A1D9D"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PrivateSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPrivateSubnet1SubnetACE2E14F"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PrivateSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPrivateSubnet1RouteTable95482E18"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PrivateSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPrivateSubnet1RouteTableAssociationE11D07C3"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PrivateSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPrivateSubnet1DefaultRoute827289F2"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PrivateSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPrivateSubnet2Subnet28069646"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PrivateSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPrivateSubnet2RouteTableCD72DFB1"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PrivateSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPrivateSubnet2RouteTableAssociationBF89729F"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/PrivateSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCPrivateSubnet2DefaultRoute15BC1C23"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/IsolatedSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCIsolatedSubnet1Subnet46430B93"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/IsolatedSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCIsolatedSubnet1RouteTable947C8942"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/IsolatedSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCIsolatedSubnet1RouteTableAssociation7CD03987"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/IsolatedSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCIsolatedSubnet2Subnet03537E4A"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/IsolatedSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCIsolatedSubnet2RouteTable9E39E2FD"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/IsolatedSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCIsolatedSubnet2RouteTableAssociation1BD29CD3"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/IGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCIGW3F5B9CE3"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/VPCGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCVPCGW2310C5E1"
+          }
+        ],
+        "/VpcStack/AiStarterKitVPC/S3/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVPCS324FBE1F2"
+          }
+        ],
+        "/VpcStack/AiStarterKitAlbSg/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitAlbSgFB957871"
+          }
+        ],
+        "/VpcStack/AiStarterKitEcsSg/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitEcsSg3258806D"
+          }
+        ],
+        "/VpcStack/AiStarterKitEcsSg/from VpcStackAiStarterKitAlbSg63A358F6:5678": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitEcsSgfromVpcStackAiStarterKitAlbSg63A358F6567898CE1D05"
+          }
+        ],
+        "/VpcStack/AiStarterKitEcsSg/from VpcStackAiStarterKitEcsSg954E627E:11434": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitEcsSgfromVpcStackAiStarterKitEcsSg954E627E11434AB13EB28"
+          }
+        ],
+        "/VpcStack/AiStarterKitEcsSg/from VpcStackAiStarterKitEcsSg954E627E:6333": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitEcsSgfromVpcStackAiStarterKitEcsSg954E627E63335AE0317F"
+          }
+        ],
+        "/VpcStack/AiStarterKitRdsSg/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitRdsSg609BDBFF"
+          }
+        ],
+        "/VpcStack/AiStarterKitRdsSg/from VpcStackAiStarterKitEcsSg954E627E:5432": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitRdsSgfromVpcStackAiStarterKitEcsSg954E627E5432A8355D53"
+          }
+        ],
+        "/VpcStack/AiStarterKitVpcId": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitVpcId"
+          }
+        ],
+        "/VpcStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/VpcStack/Exports/Output{\"Ref\":\"AiStarterKitVPCIsolatedSubnet1Subnet46430B93\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefAiStarterKitVPCIsolatedSubnet1Subnet46430B93711716B0"
+          }
+        ],
+        "/VpcStack/Exports/Output{\"Ref\":\"AiStarterKitVPCIsolatedSubnet2Subnet03537E4A\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefAiStarterKitVPCIsolatedSubnet2Subnet03537E4AEF91FA18"
+          }
+        ],
+        "/VpcStack/Exports/Output{\"Fn::GetAtt\":[\"AiStarterKitRdsSg609BDBFF\",\"GroupId\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttAiStarterKitRdsSg609BDBFFGroupId878AA826"
+          }
+        ],
+        "/VpcStack/Exports/Output{\"Fn::GetAtt\":[\"AiStarterKitAlbSgFB957871\",\"GroupId\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttAiStarterKitAlbSgFB957871GroupId6FDD03F9"
+          }
+        ],
+        "/VpcStack/Exports/Output{\"Ref\":\"AiStarterKitVPCPublicSubnet1Subnet8223C1CA\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefAiStarterKitVPCPublicSubnet1Subnet8223C1CA8B1BA21A"
+          }
+        ],
+        "/VpcStack/Exports/Output{\"Ref\":\"AiStarterKitVPCPublicSubnet2SubnetB46BCE3A\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefAiStarterKitVPCPublicSubnet2SubnetB46BCE3A6C21AFA4"
+          }
+        ],
+        "/VpcStack/Exports/Output{\"Ref\":\"AiStarterKitVPC247379A5\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefAiStarterKitVPC247379A5C85F265D"
+          }
+        ],
+        "/VpcStack/Exports/Output{\"Fn::GetAtt\":[\"AiStarterKitEcsSg3258806D\",\"GroupId\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttAiStarterKitEcsSg3258806DGroupId577E92C3"
+          }
+        ],
+        "/VpcStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/VpcStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "VpcStack"
+    },
+    "RdsStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "RdsStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "RdsStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://539247467350/us-west-2",
+      "properties": {
+        "templateFile": "RdsStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::539247467350:role/cdk-hnb659fds-deploy-role-539247467350-us-west-2",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::539247467350:role/cdk-hnb659fds-cfn-exec-role-539247467350-us-west-2",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-539247467350-us-west-2/f246e8cb6e4783aa97f1da0ff980db3d98d0bee09904de26979510741386333d.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "RdsStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::539247467350:role/cdk-hnb659fds-lookup-role-539247467350-us-west-2",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "VpcStack",
+        "RdsStack.assets"
+      ],
+      "metadata": {
+        "/RdsStack/AiStarterKitDbSecret/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitDbSecret4463D5EB"
+          }
+        ],
+        "/RdsStack/AiStarterKitDbSecret/Attachment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitDbSecretAttachment4142D0EA"
+          }
+        ],
+        "/RdsStack/DbParams/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DbParamsC3A84CD6"
+          }
+        ],
+        "/RdsStack/AiStarterKitDb/SubnetGroup/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitDbSubnetGroup4306B3C2"
+          }
+        ],
+        "/RdsStack/AiStarterKitDb/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AiStarterKitDb9C7B26C3"
+          }
+        ],
+        "/RdsStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/RdsStack/Exports/Output{\"Ref\":\"AiStarterKitDbSecretAttachment4142D0EA\"}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputRefAiStarterKitDbSecretAttachment4142D0EACBA3F24B"
+          }
+        ],
+        "/RdsStack/Exports/Output{\"Fn::GetAtt\":[\"AiStarterKitDb9C7B26C3\",\"Endpoint.Address\"]}": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExportsOutputFnGetAttAiStarterKitDb9C7B26C3EndpointAddressF91F6D63"
+          }
+        ],
+        "/RdsStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/RdsStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "RdsStack"
+    },
+    "EcsStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "EcsStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "EcsStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://539247467350/us-west-2",
+      "properties": {
+        "templateFile": "EcsStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::539247467350:role/cdk-hnb659fds-deploy-role-539247467350-us-west-2",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::539247467350:role/cdk-hnb659fds-cfn-exec-role-539247467350-us-west-2",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-539247467350-us-west-2/6dec83a287fc9cb192af9b9e4ddeea527af108fed1b918d4706c89c33ee837bb.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "EcsStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::539247467350:role/cdk-hnb659fds-lookup-role-539247467350-us-west-2",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "VpcStack",
+        "RdsStack",
+        "EcsStack.assets"
+      ],
+      "metadata": {
+        "/EcsStack/Cluster/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ClusterEB0386A7"
+          }
+        ],
+        "/EcsStack/TaskExecutionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TaskExecutionRole250D2532"
+          }
+        ],
+        "/EcsStack/TaskExecutionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TaskExecutionRoleDefaultPolicyA84DD1B0"
+          }
+        ],
+        "/EcsStack/TaskRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TaskRole30FC0FBB"
+          }
+        ],
+        "/EcsStack/LogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogGroupF5B46931"
+          }
+        ],
+        "/EcsStack/TaskDefinition/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TaskDefinitionB36D86D9"
+          }
+        ],
+        "/EcsStack/ALB/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ALBAEE750D2"
+          }
+        ],
+        "/EcsStack/ALB/Listener/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ALBListener3B99FF85"
+          }
+        ],
+        "/EcsStack/TargetGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TargetGroup3D7CD9B8"
+          }
+        ],
+        "/EcsStack/Service": [
+          {
+            "type": "aws:cdk:warning",
+            "data": "minHealthyPercent has not been configured so the default value of 50% is used. The number of running tasks will decrease below the desired count during deployments etc. See https://github.com/aws/aws-cdk/issues/31705 [ack: @aws-cdk/aws-ecs:minHealthyPercent]",
+            "trace": [
+              "Annotations.addMessage (/var/folders/3z/v8t52h195_x1280rbdf419l80000gp/T/jsii-kernel-7Bvdyz/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1608)",
+              "Annotations.addWarningV2 (/var/folders/3z/v8t52h195_x1280rbdf419l80000gp/T/jsii-kernel-7Bvdyz/node_modules/aws-cdk-lib/core/lib/annotations.js:1:825)",
+              "new BaseService (/var/folders/3z/v8t52h195_x1280rbdf419l80000gp/T/jsii-kernel-7Bvdyz/node_modules/aws-cdk-lib/aws-ecs/lib/base/base-service.js:1:8201)",
+              "new FargateService2 (/var/folders/3z/v8t52h195_x1280rbdf419l80000gp/T/jsii-kernel-7Bvdyz/node_modules/aws-cdk-lib/aws-ecs/lib/fargate/fargate-service.js:1:3888)",
+              "new FargateService2 (/var/folders/3z/v8t52h195_x1280rbdf419l80000gp/T/jsii-kernel-7Bvdyz/node_modules/aws-cdk-lib/core/lib/prop-injectable.js:1:488)",
+              "Kernel._Kernel_create (/private/var/folders/3z/v8t52h195_x1280rbdf419l80000gp/T/tmp5w8s4b20/lib/program.js:548:25)",
+              "Kernel.create (/private/var/folders/3z/v8t52h195_x1280rbdf419l80000gp/T/tmp5w8s4b20/lib/program.js:218:93)",
+              "KernelHost.processRequest (/private/var/folders/3z/v8t52h195_x1280rbdf419l80000gp/T/tmp5w8s4b20/lib/program.js:15467:36)",
+              "KernelHost.run (/private/var/folders/3z/v8t52h195_x1280rbdf419l80000gp/T/tmp5w8s4b20/lib/program.js:15427:22)",
+              "Immediate._onImmediate (/private/var/folders/3z/v8t52h195_x1280rbdf419l80000gp/T/tmp5w8s4b20/lib/program.js:15428:46)",
+              "process.processImmediate (node:internal/timers:505:21)"
+            ]
+          }
+        ],
+        "/EcsStack/Service/Service": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServiceD69D759B"
+          }
+        ],
+        "/EcsStack/LoadBalancerDNS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoadBalancerDNS"
+          }
+        ],
+        "/EcsStack/N8nUrl": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "N8nUrl"
+          }
+        ],
+        "/EcsStack/OllamaEndpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OllamaEndpoint"
+          }
+        ],
+        "/EcsStack/QdrantEndpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "QdrantEndpoint"
+          }
+        ],
+        "/EcsStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/EcsStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/EcsStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "EcsStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  },
+  "minimumCliVersion": "2.1005.0"
+}

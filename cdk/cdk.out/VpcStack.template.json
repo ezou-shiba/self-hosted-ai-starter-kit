@@ -1,0 +1,1010 @@
+{
+ "Resources": {
+  "AiStarterKitVPC247379A5": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Ipv4IpamPoolId": "ipam-pool-03b27f5d788beda16",
+    "Ipv4NetmaskLength": 16,
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/Resource"
+   }
+  },
+  "AiStarterKitVPCPublicSubnet1Subnet8223C1CA": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-west-2a",
+    "CidrBlock": {
+     "Fn::Select": [
+      0,
+      {
+       "Fn::Cidr": [
+        {
+         "Fn::GetAtt": [
+          "AiStarterKitVPC247379A5",
+          "CidrBlock"
+         ]
+        },
+        16,
+        "12"
+       ]
+      }
+     ]
+    },
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "AiStarterKitVPC247379A5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PublicSubnet1/Subnet"
+   }
+  },
+  "AiStarterKitVPCPublicSubnet1RouteTable6FE7DBF2": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "AiStarterKitVPC247379A5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PublicSubnet1/RouteTable"
+   }
+  },
+  "AiStarterKitVPCPublicSubnet1RouteTableAssociation6B17BD84": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "AiStarterKitVPCPublicSubnet1RouteTable6FE7DBF2"
+    },
+    "SubnetId": {
+     "Ref": "AiStarterKitVPCPublicSubnet1Subnet8223C1CA"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PublicSubnet1/RouteTableAssociation"
+   }
+  },
+  "AiStarterKitVPCPublicSubnet1DefaultRouteE2417A19": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "AiStarterKitVPCIGW3F5B9CE3"
+    },
+    "RouteTableId": {
+     "Ref": "AiStarterKitVPCPublicSubnet1RouteTable6FE7DBF2"
+    }
+   },
+   "DependsOn": [
+    "AiStarterKitVPCVPCGW2310C5E1"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PublicSubnet1/DefaultRoute"
+   }
+  },
+  "AiStarterKitVPCPublicSubnet1EIP4CE6DC3C": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC/PublicSubnet1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PublicSubnet1/EIP"
+   }
+  },
+  "AiStarterKitVPCPublicSubnet1NATGateway8C5615BF": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "AiStarterKitVPCPublicSubnet1EIP4CE6DC3C",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "AiStarterKitVPCPublicSubnet1Subnet8223C1CA"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC/PublicSubnet1"
+     }
+    ]
+   },
+   "DependsOn": [
+    "AiStarterKitVPCPublicSubnet1DefaultRouteE2417A19",
+    "AiStarterKitVPCPublicSubnet1RouteTableAssociation6B17BD84"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PublicSubnet1/NATGateway"
+   }
+  },
+  "AiStarterKitVPCPublicSubnet2SubnetB46BCE3A": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-west-2b",
+    "CidrBlock": {
+     "Fn::Select": [
+      1,
+      {
+       "Fn::Cidr": [
+        {
+         "Fn::GetAtt": [
+          "AiStarterKitVPC247379A5",
+          "CidrBlock"
+         ]
+        },
+        16,
+        "12"
+       ]
+      }
+     ]
+    },
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "AiStarterKitVPC247379A5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PublicSubnet2/Subnet"
+   }
+  },
+  "AiStarterKitVPCPublicSubnet2RouteTableBDB11FA1": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "AiStarterKitVPC247379A5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PublicSubnet2/RouteTable"
+   }
+  },
+  "AiStarterKitVPCPublicSubnet2RouteTableAssociation9EF99589": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "AiStarterKitVPCPublicSubnet2RouteTableBDB11FA1"
+    },
+    "SubnetId": {
+     "Ref": "AiStarterKitVPCPublicSubnet2SubnetB46BCE3A"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PublicSubnet2/RouteTableAssociation"
+   }
+  },
+  "AiStarterKitVPCPublicSubnet2DefaultRoute7402E2FB": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "AiStarterKitVPCIGW3F5B9CE3"
+    },
+    "RouteTableId": {
+     "Ref": "AiStarterKitVPCPublicSubnet2RouteTableBDB11FA1"
+    }
+   },
+   "DependsOn": [
+    "AiStarterKitVPCVPCGW2310C5E1"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PublicSubnet2/DefaultRoute"
+   }
+  },
+  "AiStarterKitVPCPublicSubnet2EIPDDE12D79": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC/PublicSubnet2"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PublicSubnet2/EIP"
+   }
+  },
+  "AiStarterKitVPCPublicSubnet2NATGateway661A1D9D": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "AiStarterKitVPCPublicSubnet2EIPDDE12D79",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "AiStarterKitVPCPublicSubnet2SubnetB46BCE3A"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC/PublicSubnet2"
+     }
+    ]
+   },
+   "DependsOn": [
+    "AiStarterKitVPCPublicSubnet2DefaultRoute7402E2FB",
+    "AiStarterKitVPCPublicSubnet2RouteTableAssociation9EF99589"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PublicSubnet2/NATGateway"
+   }
+  },
+  "AiStarterKitVPCPrivateSubnet1SubnetACE2E14F": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-west-2a",
+    "CidrBlock": {
+     "Fn::Select": [
+      2,
+      {
+       "Fn::Cidr": [
+        {
+         "Fn::GetAtt": [
+          "AiStarterKitVPC247379A5",
+          "CidrBlock"
+         ]
+        },
+        16,
+        "12"
+       ]
+      }
+     ]
+    },
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "AiStarterKitVPC247379A5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PrivateSubnet1/Subnet"
+   }
+  },
+  "AiStarterKitVPCPrivateSubnet1RouteTable95482E18": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "AiStarterKitVPC247379A5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PrivateSubnet1/RouteTable"
+   }
+  },
+  "AiStarterKitVPCPrivateSubnet1RouteTableAssociationE11D07C3": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "AiStarterKitVPCPrivateSubnet1RouteTable95482E18"
+    },
+    "SubnetId": {
+     "Ref": "AiStarterKitVPCPrivateSubnet1SubnetACE2E14F"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PrivateSubnet1/RouteTableAssociation"
+   }
+  },
+  "AiStarterKitVPCPrivateSubnet1DefaultRoute827289F2": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "AiStarterKitVPCPublicSubnet1NATGateway8C5615BF"
+    },
+    "RouteTableId": {
+     "Ref": "AiStarterKitVPCPrivateSubnet1RouteTable95482E18"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PrivateSubnet1/DefaultRoute"
+   }
+  },
+  "AiStarterKitVPCPrivateSubnet2Subnet28069646": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-west-2b",
+    "CidrBlock": {
+     "Fn::Select": [
+      3,
+      {
+       "Fn::Cidr": [
+        {
+         "Fn::GetAtt": [
+          "AiStarterKitVPC247379A5",
+          "CidrBlock"
+         ]
+        },
+        16,
+        "12"
+       ]
+      }
+     ]
+    },
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC/PrivateSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "AiStarterKitVPC247379A5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PrivateSubnet2/Subnet"
+   }
+  },
+  "AiStarterKitVPCPrivateSubnet2RouteTableCD72DFB1": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC/PrivateSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "AiStarterKitVPC247379A5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PrivateSubnet2/RouteTable"
+   }
+  },
+  "AiStarterKitVPCPrivateSubnet2RouteTableAssociationBF89729F": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "AiStarterKitVPCPrivateSubnet2RouteTableCD72DFB1"
+    },
+    "SubnetId": {
+     "Ref": "AiStarterKitVPCPrivateSubnet2Subnet28069646"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PrivateSubnet2/RouteTableAssociation"
+   }
+  },
+  "AiStarterKitVPCPrivateSubnet2DefaultRoute15BC1C23": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "AiStarterKitVPCPublicSubnet2NATGateway661A1D9D"
+    },
+    "RouteTableId": {
+     "Ref": "AiStarterKitVPCPrivateSubnet2RouteTableCD72DFB1"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/PrivateSubnet2/DefaultRoute"
+   }
+  },
+  "AiStarterKitVPCIsolatedSubnet1Subnet46430B93": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-west-2a",
+    "CidrBlock": {
+     "Fn::Select": [
+      4,
+      {
+       "Fn::Cidr": [
+        {
+         "Fn::GetAtt": [
+          "AiStarterKitVPC247379A5",
+          "CidrBlock"
+         ]
+        },
+        16,
+        "12"
+       ]
+      }
+     ]
+    },
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Isolated"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Isolated"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC/IsolatedSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "AiStarterKitVPC247379A5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/IsolatedSubnet1/Subnet"
+   }
+  },
+  "AiStarterKitVPCIsolatedSubnet1RouteTable947C8942": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC/IsolatedSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "AiStarterKitVPC247379A5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/IsolatedSubnet1/RouteTable"
+   }
+  },
+  "AiStarterKitVPCIsolatedSubnet1RouteTableAssociation7CD03987": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "AiStarterKitVPCIsolatedSubnet1RouteTable947C8942"
+    },
+    "SubnetId": {
+     "Ref": "AiStarterKitVPCIsolatedSubnet1Subnet46430B93"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/IsolatedSubnet1/RouteTableAssociation"
+   }
+  },
+  "AiStarterKitVPCIsolatedSubnet2Subnet03537E4A": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": "us-west-2b",
+    "CidrBlock": {
+     "Fn::Select": [
+      5,
+      {
+       "Fn::Cidr": [
+        {
+         "Fn::GetAtt": [
+          "AiStarterKitVPC247379A5",
+          "CidrBlock"
+         ]
+        },
+        16,
+        "12"
+       ]
+      }
+     ]
+    },
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Isolated"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Isolated"
+     },
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC/IsolatedSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "AiStarterKitVPC247379A5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/IsolatedSubnet2/Subnet"
+   }
+  },
+  "AiStarterKitVPCIsolatedSubnet2RouteTable9E39E2FD": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC/IsolatedSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "AiStarterKitVPC247379A5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/IsolatedSubnet2/RouteTable"
+   }
+  },
+  "AiStarterKitVPCIsolatedSubnet2RouteTableAssociation1BD29CD3": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "AiStarterKitVPCIsolatedSubnet2RouteTable9E39E2FD"
+    },
+    "SubnetId": {
+     "Ref": "AiStarterKitVPCIsolatedSubnet2Subnet03537E4A"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/IsolatedSubnet2/RouteTableAssociation"
+   }
+  },
+  "AiStarterKitVPCIGW3F5B9CE3": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/IGW"
+   }
+  },
+  "AiStarterKitVPCVPCGW2310C5E1": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "InternetGatewayId": {
+     "Ref": "AiStarterKitVPCIGW3F5B9CE3"
+    },
+    "VpcId": {
+     "Ref": "AiStarterKitVPC247379A5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/VPCGW"
+   }
+  },
+  "AiStarterKitVPCS324FBE1F2": {
+   "Type": "AWS::EC2::VPCEndpoint",
+   "Properties": {
+    "RouteTableIds": [
+     {
+      "Ref": "AiStarterKitVPCPrivateSubnet1RouteTable95482E18"
+     },
+     {
+      "Ref": "AiStarterKitVPCPrivateSubnet2RouteTableCD72DFB1"
+     },
+     {
+      "Ref": "AiStarterKitVPCPublicSubnet1RouteTable6FE7DBF2"
+     },
+     {
+      "Ref": "AiStarterKitVPCPublicSubnet2RouteTableBDB11FA1"
+     },
+     {
+      "Ref": "AiStarterKitVPCIsolatedSubnet1RouteTable947C8942"
+     },
+     {
+      "Ref": "AiStarterKitVPCIsolatedSubnet2RouteTable9E39E2FD"
+     }
+    ],
+    "ServiceName": {
+     "Fn::Join": [
+      "",
+      [
+       "com.amazonaws.",
+       {
+        "Ref": "AWS::Region"
+       },
+       ".s3"
+      ]
+     ]
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "VpcStack/AiStarterKitVPC"
+     }
+    ],
+    "VpcEndpointType": "Gateway",
+    "VpcId": {
+     "Ref": "AiStarterKitVPC247379A5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitVPC/S3/Resource"
+   }
+  },
+  "AiStarterKitAlbSgFB957871": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Security group for AI Starter Kit ALB",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "73.241.100.231/32",
+      "Description": "Allow HTTP from specific IP",
+      "FromPort": 80,
+      "IpProtocol": "tcp",
+      "ToPort": 80
+     },
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow from anyone on port 80",
+      "FromPort": 80,
+      "IpProtocol": "tcp",
+      "ToPort": 80
+     }
+    ],
+    "VpcId": {
+     "Ref": "AiStarterKitVPC247379A5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitAlbSg/Resource"
+   }
+  },
+  "AiStarterKitEcsSg3258806D": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Security group for AI Starter Kit ECS tasks",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "AiStarterKitVPC247379A5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitEcsSg/Resource"
+   }
+  },
+  "AiStarterKitEcsSgfromVpcStackAiStarterKitAlbSg63A358F6567898CE1D05": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "Allow n8n access from ALB",
+    "FromPort": 5678,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "AiStarterKitEcsSg3258806D",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "AiStarterKitAlbSgFB957871",
+      "GroupId"
+     ]
+    },
+    "ToPort": 5678
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitEcsSg/from VpcStackAiStarterKitAlbSg63A358F6:5678"
+   }
+  },
+  "AiStarterKitEcsSgfromVpcStackAiStarterKitEcsSg954E627E11434AB13EB28": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "Allow Ollama access from containers",
+    "FromPort": 11434,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "AiStarterKitEcsSg3258806D",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "AiStarterKitEcsSg3258806D",
+      "GroupId"
+     ]
+    },
+    "ToPort": 11434
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitEcsSg/from VpcStackAiStarterKitEcsSg954E627E:11434"
+   }
+  },
+  "AiStarterKitEcsSgfromVpcStackAiStarterKitEcsSg954E627E63335AE0317F": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "Allow Qdrant access from containers",
+    "FromPort": 6333,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "AiStarterKitEcsSg3258806D",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "AiStarterKitEcsSg3258806D",
+      "GroupId"
+     ]
+    },
+    "ToPort": 6333
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitEcsSg/from VpcStackAiStarterKitEcsSg954E627E:6333"
+   }
+  },
+  "AiStarterKitRdsSg609BDBFF": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Security group for AI Starter Kit RDS",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": {
+       "Fn::GetAtt": [
+        "AiStarterKitVPC247379A5",
+        "CidrBlock"
+       ]
+      },
+      "Description": "Allow PostgreSQL access from anywhere in VPC",
+      "FromPort": 5432,
+      "IpProtocol": "tcp",
+      "ToPort": 5432
+     }
+    ],
+    "VpcId": {
+     "Ref": "AiStarterKitVPC247379A5"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitRdsSg/Resource"
+   }
+  },
+  "AiStarterKitRdsSgfromVpcStackAiStarterKitEcsSg954E627E5432A8355D53": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "Allow PostgreSQL access from ECS",
+    "FromPort": 5432,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "AiStarterKitRdsSg609BDBFF",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "AiStarterKitEcsSg3258806D",
+      "GroupId"
+     ]
+    },
+    "ToPort": 5432
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/AiStarterKitRdsSg/from VpcStackAiStarterKitEcsSg954E627E:5432"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/32OQYvCMBCFf4v3NEsVBI8iIr2soRWvksbZddY6KcmMUsT/vql27W1P897HY/imOl/MdT6xt5i54zlrsNb3iq07q4QO4Kb6vm+dWn3R3qyUkbpBV0lNwD0bU+mFYWfrBkY+smWM3qFl9PQe92FdmP58Wt5YhpvtlAl4TXF8XBBDSPlv8DIZ2pKT6ukCxGogSXZNx9Yj8TB91wqcBORuE7y0T8t/QUHfAWJ8qBKil+CewlvhVvihTMcnTx8zned6MfmJiFkQYryALl/3FwiOkgZaAQAA"
+   },
+   "Metadata": {
+    "aws:cdk:path": "VpcStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "AiStarterKitVpcId": {
+   "Value": {
+    "Ref": "AiStarterKitVPC247379A5"
+   },
+   "Export": {
+    "Name": "VpcStack-VpcId"
+   }
+  },
+  "ExportsOutputRefAiStarterKitVPCIsolatedSubnet1Subnet46430B93711716B0": {
+   "Value": {
+    "Ref": "AiStarterKitVPCIsolatedSubnet1Subnet46430B93"
+   },
+   "Export": {
+    "Name": "VpcStack:ExportsOutputRefAiStarterKitVPCIsolatedSubnet1Subnet46430B93711716B0"
+   }
+  },
+  "ExportsOutputRefAiStarterKitVPCIsolatedSubnet2Subnet03537E4AEF91FA18": {
+   "Value": {
+    "Ref": "AiStarterKitVPCIsolatedSubnet2Subnet03537E4A"
+   },
+   "Export": {
+    "Name": "VpcStack:ExportsOutputRefAiStarterKitVPCIsolatedSubnet2Subnet03537E4AEF91FA18"
+   }
+  },
+  "ExportsOutputFnGetAttAiStarterKitRdsSg609BDBFFGroupId878AA826": {
+   "Value": {
+    "Fn::GetAtt": [
+     "AiStarterKitRdsSg609BDBFF",
+     "GroupId"
+    ]
+   },
+   "Export": {
+    "Name": "VpcStack:ExportsOutputFnGetAttAiStarterKitRdsSg609BDBFFGroupId878AA826"
+   }
+  },
+  "ExportsOutputFnGetAttAiStarterKitAlbSgFB957871GroupId6FDD03F9": {
+   "Value": {
+    "Fn::GetAtt": [
+     "AiStarterKitAlbSgFB957871",
+     "GroupId"
+    ]
+   },
+   "Export": {
+    "Name": "VpcStack:ExportsOutputFnGetAttAiStarterKitAlbSgFB957871GroupId6FDD03F9"
+   }
+  },
+  "ExportsOutputRefAiStarterKitVPCPublicSubnet1Subnet8223C1CA8B1BA21A": {
+   "Value": {
+    "Ref": "AiStarterKitVPCPublicSubnet1Subnet8223C1CA"
+   },
+   "Export": {
+    "Name": "VpcStack:ExportsOutputRefAiStarterKitVPCPublicSubnet1Subnet8223C1CA8B1BA21A"
+   }
+  },
+  "ExportsOutputRefAiStarterKitVPCPublicSubnet2SubnetB46BCE3A6C21AFA4": {
+   "Value": {
+    "Ref": "AiStarterKitVPCPublicSubnet2SubnetB46BCE3A"
+   },
+   "Export": {
+    "Name": "VpcStack:ExportsOutputRefAiStarterKitVPCPublicSubnet2SubnetB46BCE3A6C21AFA4"
+   }
+  },
+  "ExportsOutputRefAiStarterKitVPC247379A5C85F265D": {
+   "Value": {
+    "Ref": "AiStarterKitVPC247379A5"
+   },
+   "Export": {
+    "Name": "VpcStack:ExportsOutputRefAiStarterKitVPC247379A5C85F265D"
+   }
+  },
+  "ExportsOutputFnGetAttAiStarterKitEcsSg3258806DGroupId577E92C3": {
+   "Value": {
+    "Fn::GetAtt": [
+     "AiStarterKitEcsSg3258806D",
+     "GroupId"
+    ]
+   },
+   "Export": {
+    "Name": "VpcStack:ExportsOutputFnGetAttAiStarterKitEcsSg3258806DGroupId577E92C3"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

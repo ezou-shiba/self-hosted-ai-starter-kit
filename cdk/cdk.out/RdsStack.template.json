@@ -1,0 +1,189 @@
+{
+ "Resources": {
+  "AiStarterKitDbSecret4463D5EB": {
+   "Type": "AWS::SecretsManager::Secret",
+   "Properties": {
+    "GenerateSecretString": {
+     "ExcludeCharacters": "\"@/\\",
+     "GenerateStringKey": "password",
+     "SecretStringTemplate": "{\"username\": \"dbadmin\"}"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "RdsStack/AiStarterKitDbSecret/Resource"
+   }
+  },
+  "AiStarterKitDbSecretAttachment4142D0EA": {
+   "Type": "AWS::SecretsManager::SecretTargetAttachment",
+   "Properties": {
+    "SecretId": {
+     "Ref": "AiStarterKitDbSecret4463D5EB"
+    },
+    "TargetId": {
+     "Ref": "AiStarterKitDb9C7B26C3"
+    },
+    "TargetType": "AWS::RDS::DBInstance"
+   },
+   "Metadata": {
+    "aws:cdk:path": "RdsStack/AiStarterKitDbSecret/Attachment/Resource"
+   }
+  },
+  "DbParamsC3A84CD6": {
+   "Type": "AWS::RDS::DBParameterGroup",
+   "Properties": {
+    "Description": "Parameter group for postgres15",
+    "Family": "postgres15",
+    "Parameters": {
+     "rds.force_ssl": "0"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "RdsStack/DbParams/Resource"
+   }
+  },
+  "AiStarterKitDbSubnetGroup4306B3C2": {
+   "Type": "AWS::RDS::DBSubnetGroup",
+   "Properties": {
+    "DBSubnetGroupDescription": "Subnet group for AiStarterKitDb database",
+    "SubnetIds": [
+     {
+      "Fn::ImportValue": "VpcStack:ExportsOutputRefAiStarterKitVPCIsolatedSubnet1Subnet46430B93711716B0"
+     },
+     {
+      "Fn::ImportValue": "VpcStack:ExportsOutputRefAiStarterKitVPCIsolatedSubnet2Subnet03537E4AEF91FA18"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "RdsStack/AiStarterKitDb/SubnetGroup/Default"
+   }
+  },
+  "AiStarterKitDb9C7B26C3": {
+   "Type": "AWS::RDS::DBInstance",
+   "Properties": {
+    "AllocatedStorage": "20",
+    "BackupRetentionPeriod": 7,
+    "CopyTagsToSnapshot": true,
+    "DBInstanceClass": "db.t3.micro",
+    "DBName": "n8n",
+    "DBParameterGroupName": {
+     "Ref": "DbParamsC3A84CD6"
+    },
+    "DBSubnetGroupName": {
+     "Ref": "AiStarterKitDbSubnetGroup4306B3C2"
+    },
+    "DeletionProtection": false,
+    "EnablePerformanceInsights": true,
+    "Engine": "postgres",
+    "EngineVersion": "15",
+    "MasterUserPassword": {
+     "Fn::Join": [
+      "",
+      [
+       "{{resolve:secretsmanager:",
+       {
+        "Ref": "AiStarterKitDbSecret4463D5EB"
+       },
+       ":SecretString:password::}}"
+      ]
+     ]
+    },
+    "MasterUsername": {
+     "Fn::Join": [
+      "",
+      [
+       "{{resolve:secretsmanager:",
+       {
+        "Ref": "AiStarterKitDbSecret4463D5EB"
+       },
+       ":SecretString:username::}}"
+      ]
+     ]
+    },
+    "MaxAllocatedStorage": 100,
+    "PerformanceInsightsRetentionPeriod": 7,
+    "Port": "5432",
+    "PreferredBackupWindow": "03:00-04:00",
+    "PreferredMaintenanceWindow": "Mon:04:00-Mon:05:00",
+    "PubliclyAccessible": false,
+    "StorageType": "gp2",
+    "VPCSecurityGroups": [
+     {
+      "Fn::ImportValue": "VpcStack:ExportsOutputFnGetAttAiStarterKitRdsSg609BDBFFGroupId878AA826"
+     }
+    ]
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "RdsStack/AiStarterKitDb/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/2WLQQuCQBCFf4v3dWMLAo+VEN0ku8e4TrrZrjE7EiH737MsEDu9me99bylVspYqgoePddnEN1PIPmfQjRjQufeoCdlbcFAhDdXnF7uL+15jnIAq5A0Pw9qimwjzJggqvewzILDISHtqu/tbT7czlgJDAR4PzjM4jSLvCoc8GfyBnxpCENmT69YtVlIpmURXb0xMnWNjUR7HfAFcTQYF/AAAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "RdsStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "ExportsOutputRefAiStarterKitDbSecretAttachment4142D0EACBA3F24B": {
+   "Value": {
+    "Ref": "AiStarterKitDbSecretAttachment4142D0EA"
+   },
+   "Export": {
+    "Name": "RdsStack:ExportsOutputRefAiStarterKitDbSecretAttachment4142D0EACBA3F24B"
+   }
+  },
+  "ExportsOutputFnGetAttAiStarterKitDb9C7B26C3EndpointAddressF91F6D63": {
+   "Value": {
+    "Fn::GetAtt": [
+     "AiStarterKitDb9C7B26C3",
+     "Endpoint.Address"
+    ]
+   },
+   "Export": {
+    "Name": "RdsStack:ExportsOutputFnGetAttAiStarterKitDb9C7B26C3EndpointAddressF91F6D63"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
